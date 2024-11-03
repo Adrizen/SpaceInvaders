@@ -51,9 +51,9 @@ export default class App extends PureComponent {
     if (winner) this.reinitState();
 
     this.generateAliens();
-	if (false) {
+	// if (false) { // TODO: Borrar que es pa testing.
 		this.gameLoop = setInterval(() => this.renderFrame(), this.state.speed);
-	}
+	//}
   }
 
   reinitState() {
