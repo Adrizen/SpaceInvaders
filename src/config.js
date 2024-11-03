@@ -5,10 +5,10 @@ const options = {
     startingGameSpeed: 1000,
     speedMultiplier: 0.08,
     rocketSpeed: 1600,
-    rocketCoolDown: 800, // Time interval between one missile and another
+    rocketCoolDown: 800, // El intervalo de tiempo entre un misil y otro.
     explosionDuration: 400,
 
-    aliensInit: [5, 5, 5], // 3 rows, each with 5 aliens; the index + 1 is the type of alien
+    aliensInit: [5, 5, 5], // 3 filas, cada una con 5 aliens;
     aliensHorDistance: 20,
     aliensVerDistance: 20,
     aliensHorStep: 20,
@@ -21,10 +21,10 @@ const options = {
     cannonSize: 50,
     alienSize: 40,
 
-    mainColor: '#22cc00' // just texts and missile
+    mainColor: '#22cc00' // texto y misiles del jugador.
 }
 
-// All sprites must be square!
+// Los sprites tiene que ser cuadrados.
 export const sprites = {
     cannon: require('../assets/512/cannon.png'),
     explosion1: require('../assets/512/explosion1.png'),
