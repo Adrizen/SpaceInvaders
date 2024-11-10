@@ -3,7 +3,6 @@ const options = {
     speedMultiplier: 0.08,
     rocketSpeed: 1600,
     rocketCoolDown: 800, // El intervalo de tiempo entre un misil y otro.
-    explosionDuration: 400,
 
     aliensInit: [5, 5, 5], // 3 filas, cada una con 5 aliens;
     aliensHorDistance: 20,
@@ -24,8 +23,6 @@ const options = {
 // Los sprites tiene que ser cuadrados.
 export const sprites = {
     cannon: require('../assets/512/cannon.png'),
-    explosion1: require('../assets/512/explosion1.png'),
-    explosion2: require('../assets/512/explosion2.png'),
     alien1_1: require('../assets/512/alien1_1.png'),
     alien1_2: require('../assets/512/alien1_2.png'),
     alien2_1: require('../assets/512/alien2_1.png'),

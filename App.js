@@ -15,7 +15,6 @@ export default class App extends PureComponent {
     direction: 1,
     down: false,
     rockets: [],
-    explosion: [],
     score: 0,
     highest: 0,
     //isPaused: false,
@@ -83,7 +82,6 @@ export default class App extends PureComponent {
     clearInterval(this.gameLoop);
     this.setState({
       highest: Math.max(score, highest),
-      explosion: [playerXPosition, 0],
     });
 
     Alert.alert(
@@ -172,7 +170,7 @@ export default class App extends PureComponent {
       }
 
       if (el.y <= options.cannonSize)
-        this.setState({ winner: 2, explosion: [playerXPosition, 0] });
+        this.setState({ winner: 2 });
     });
 
     return clonedAliens;
@@ -215,11 +213,6 @@ export default class App extends PureComponent {
 
     const commonState = {
       aliens: clonedAliens,
-      // Coordenadas para renderizar la explosión.
-      explosion: [
-        clonedAliens[killedAlienInd].x,
-        clonedAliens[killedAlienInd].y,
-      ],
     };
 
     clonedAliens.splice(killedAlienInd, 1);
@@ -265,15 +258,12 @@ export default class App extends PureComponent {
     });
   };
 
-  clearExplosion = () => this.setState({ explosion: [] });
-
   render() {
     const {
       score,
       highest,
       rockets,
       aliens,
-      explosion,
       playerXPosition,
       lives,
       winner,
@@ -309,8 +299,6 @@ export default class App extends PureComponent {
         removeRocket={this.removeRocket}
         aliens={aliens}
         removeAlien={this.removeAlien}
-        explosion={explosion}
-        clearExplosion={this.clearExplosion}
         playerXPosition={playerXPosition}
         updatePlayerPosition={this.updatePlayerPosition}
         lives={lives}

@@ -11,7 +11,6 @@ import Controls from "../controls";
 import AliensGrid from "../aliens-grid";
 import PlayerRocket from "../rocket/player-rocket";
 import AlienRocket from "../rocket/alien-rocket";
-import Explosion from "../explosion";
 import UpperBar from "../upper-bar";
 
 
@@ -30,14 +29,12 @@ interface GameViewProps {
   score: number;
   highest: number;
   playerXPosition: number;
-  explosion: number[];
   winner: number;
   lives: number;
   fire: () => void;
   exit: () => void;
   isPaused: boolean;
   onPausePress: () => void;
-  clearExplosion: () => void;
   updatePlayerPosition: (position: number) => void;
   updateScore: () => void;
   updateLives: () => void;
@@ -61,8 +58,7 @@ export default class GameView extends PureComponent<GameViewProps> {
   }
 
   render() {
-    const {score, highest, aliens, fire, width, height, explosion, 
-           clearExplosion, updatePlayerPosition, lives, winner, exit, isPaused, onPausePress } = this.props;
+    const {score, highest, aliens, fire, width, height,updatePlayerPosition, lives, winner, exit, isPaused, onPausePress } = this.props;
       
     return (
       <SafeAreaView style={styles.base}>
@@ -88,14 +84,6 @@ export default class GameView extends PureComponent<GameViewProps> {
 
           <AliensGrid config={aliens} //width={width} height={height} // TODO: Revisar. Antes era con el width y height sin comentar.
           />
-          
-          {explosion.length > 0 && (
-            <Explosion
-              variant={1}
-              position={explosion}  
-              onAnimationEnd={clearExplosion}
-            />
-          )}
 
           {this.renderRockets()}
 
