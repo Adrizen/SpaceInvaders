@@ -18,7 +18,7 @@ export default class App extends PureComponent {
     explosion: [],
     score: 0,
     highest: 0,
-	  isPaused: false,
+    //isPaused: false,
   };
 
   componentDidMount() {
@@ -277,25 +277,25 @@ export default class App extends PureComponent {
       playerXPosition,
       lives,
       winner,
-	    isPaused,
+	    //isPaused,
     } = this.state;
 
-	togglePause = () => {
-		const { isPaused } = this.state;
+	// togglePause = () => {
+	// 	const { isPaused } = this.state;
 
-		if (isPaused) {
-			// Reanudar juego.
-			this.gameLoop = setInterval(() => this.renderFrame(), this.state.speed);
-		} else {
-			// Pausar juego.
-			if (this.gameLoop) {
-				clearInterval(this.gameLoop);
-				this.gameLoop = null;
-			}
-		}
+	// 	if (isPaused) {
+	// 		// Reanudar juego.
+	// 		this.gameLoop = setInterval(() => this.renderFrame(), this.state.speed);
+	// 	} else {
+	// 		// Pausar juego.
+	// 		if (this.gameLoop) {
+	// 			clearInterval(this.gameLoop);
+	// 			this.gameLoop = null;
+	// 		}
+	// 	}
 
-		this.setState({ isPaused: !isPaused });
-	}
+	// 	this.setState({ isPaused: !isPaused });
+	// }
 
     return (
       <GameView
@@ -317,8 +317,8 @@ export default class App extends PureComponent {
         updateLives={this.updateLives}
         winner={winner}
         exit={this.exit}
-		    isPaused={isPaused}
-		    onPausePress={this.togglePause}
+		    //isPaused={isPaused}
+		    //onPausePress={this.togglePause}
       />
     );
   }

@@ -21,7 +21,7 @@ export default class Sprite extends PureComponent<SpriteProps> {
 
     render() {
         const { width, color, style } = this.props
-        
+
         // Auto height
         // const source = Image.resolveAssetSource(img)
         // const height = width / (source.width / source.height)

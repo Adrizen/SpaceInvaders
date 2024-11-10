@@ -17,11 +17,11 @@ import UpperBar from "../upper-bar";
 
 
 interface RocketData {
-  id: string;
+  id: number;
   player: number;
+  x: number;
+  y: number;
 }
-
-type ExplosionData = number[];
 
 interface GameViewProps {
   rockets: RocketData[];
@@ -31,7 +31,7 @@ interface GameViewProps {
   score: number;
   highest: number;
   playerXPosition: number;
-  explosion: ExplosionData;
+  explosion: number[];
   winner: number;
   lives: number;
   fire: () => void;
@@ -40,16 +40,16 @@ interface GameViewProps {
   onPausePress: () => void;
   clearExplosion: () => void;
   updatePlayerPosition: (position: number) => void;
-  updateScore: (score: number) => void;
+  updateScore: () => void;
   updateLives: () => void;
-  removeAlien: (alienId: string) => void;
-  removeRocket: (rocketId: string) => void;
+  removeAlien: (alienId: number) => void;
+  removeRocket: (rocketId: number) => void;
 }
 
 export default class GameView extends PureComponent<GameViewProps> {
   renderRockets() {
     const { rockets, aliens, height, removeAlien, removeRocket, updateScore, playerXPosition, updateLives } = this.props;
-
+    
     return rockets.map((el) =>
       el.player === 1 ? (
         <PlayerRocket key={el.id} aliens={aliens} limit={height} rocketData={el} 
@@ -64,7 +64,7 @@ export default class GameView extends PureComponent<GameViewProps> {
   render() {
     const {score, highest, aliens, fire, width, height, explosion, 
            clearExplosion, updatePlayerPosition, lives, winner, exit, isPaused, onPausePress } = this.props;
-
+      
     return (
       <SafeAreaView style={styles.base}>
         <StatusBar barStyle="light-content" />
@@ -87,13 +87,13 @@ export default class GameView extends PureComponent<GameViewProps> {
             </View>
           )}
 
-          <AliensGrid config={aliens} //width={width} height={height} 
+          <AliensGrid config={aliens} //width={width} height={height} // TODO: Revisar. Antes era con el width y height sin comentar.
           />
-
+          
           {explosion.length > 0 && (
             <Explosion
-              variant={explosion[1] === 0 ? 2 : 1}
-              position={[width, height]}  // TODO: Revisar jejox. Antes era position={explosion} pero da error.
+              variant={1}
+              position={explosion}  
               onAnimationEnd={clearExplosion}
             />
           )}

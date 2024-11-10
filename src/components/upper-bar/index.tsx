@@ -21,7 +21,7 @@ export default class UpperBar extends PureComponent<UpperBarProps> {
 
                 <View style={styles.base}>
                     <TouchableOpacity onPress={onButtonPress}>
-                        <Heading>You go out</Heading>
+                        <Heading>SALIR</Heading>
                     </TouchableOpacity>
                     <Lives number={lives} />
                 </View>

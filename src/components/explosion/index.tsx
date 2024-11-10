@@ -4,16 +4,20 @@ import options from '../../config'
 
 interface ExplosionProps {
     onAnimationEnd: () => void;
-    variant: number ; // 1: alien explosion. 2: player explosion.
-    position: [number, number]; // tupla de coordenadas (x, y).
+    variant: number ; // 1: alien explosión. 2: player explosión.
+    position: number[]; // tupla de coordenadas [x, y].
 }
 
 export default class Explosion extends PureComponent<ExplosionProps> {
-    private explosion!: NodeJS.Timeout; // TODO: Esto también está distinto al .js original
+    //private explosion!: NodeJS.Timeout; // TODO: Esto también está distinto al .js original
+    private explosion!: ReturnType<typeof setTimeout>;
 
     componentDidMount() {
         const { onAnimationEnd } = this.props;
-        this.explosion = setTimeout(() => { onAnimationEnd(); }, options.explosionDuration);
+        
+        this.explosion = setTimeout(() => {
+            onAnimationEnd();
+        }, options.explosionDuration);
     }
 
     componentWillUnmount() {
@@ -22,6 +26,7 @@ export default class Explosion extends PureComponent<ExplosionProps> {
 
     render() {
         const { variant, position } = this.props;
+        console.log("rendering explosion with variant: ", variant, "and position", position)
 
         return (
             <Sprite

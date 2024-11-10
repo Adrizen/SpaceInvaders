@@ -27,6 +27,7 @@ const options = {
 // Los sprites tiene que ser cuadrados.
 export const sprites = {
     cannon: require('../assets/512/cannon.png'),
+    tuki: require('../assets/512/cannon.png'),
     explosion1: require('../assets/512/explosion1.png'),
     explosion2: require('../assets/512/explosion2.png'),
     alien1_1: require('../assets/512/alien1_1.png'),
@@ -35,6 +36,7 @@ export const sprites = {
     alien2_2: require('../assets/512/alien2_2.png'),
     alien3_1: require('../assets/512/alien3_1.png'),
     alien3_2: require('../assets/512/alien3_2.png')
+    //TODO: Agregar pause y play button.
 }
 
 export default options
