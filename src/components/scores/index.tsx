@@ -12,6 +12,7 @@ export default class Scores extends PureComponent<ScoresProps> {
     render() {
         const { score, highest, style } = this.props
 
+        // Usando flatten para convertir el style en una estructura de nivel único y que TS no se queje.
         return (
             <View style={[styles.base, StyleSheet.flatten(style)]}>
                 <Score label='score' points={score} />
