@@ -11,7 +11,6 @@ import Controls from "../controls";
 import AliensGrid from "../aliens-grid";
 import PlayerRocket from "../rocket/player-rocket";
 import AlienRocket from "../rocket/alien-rocket";
-import Sky from "../sky";
 import Explosion from "../explosion";
 import UpperBar from "../upper-bar";
 
@@ -111,7 +110,6 @@ export default class GameView extends PureComponent<GameViewProps> {
           )}
         </View>
 
-        <Sky width={width} height={height} />
       </SafeAreaView>
     );
   }

@@ -26,7 +26,6 @@ export default class Explosion extends PureComponent<ExplosionProps> {
 
     render() {
         const { variant, position } = this.props;
-        console.log("rendering explosion with variant: ", variant, "and position", position)
 
         return (
             <Sprite
