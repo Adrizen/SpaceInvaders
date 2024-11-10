@@ -1,8 +1,15 @@
 import React, { PureComponent } from 'react'
-import { Image } from 'react-native'
+import { Image, StyleProp, TextStyle } from 'react-native'
 import { sprites } from '../../config'
 
-export default class Sprite extends PureComponent {
+interface SpriteProps {
+    image: string;
+    width: number;
+    color?: string;
+    style?: StyleProp<TextStyle>; // Estilos opcionales.
+}
+
+export default class Sprite extends PureComponent<SpriteProps> {
     static defaultProps = {
         width: 50
     }

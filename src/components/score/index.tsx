@@ -2,7 +2,12 @@ import React, { PureComponent } from 'react'
 import Heading from '../heading'
 import options from '../../config'
 
-export default class Score extends PureComponent {
+interface ScoreProps {
+    points: number;
+    label: string;
+}
+
+export default class Score extends PureComponent<ScoreProps> {
     get formattedPoints() {
         const { points } = this.props
         return points.toString().padStart(4, '0')

@@ -3,23 +3,30 @@ import { View, StyleSheet } from 'react-native'
 import Sprite from '../sprite'
 import options from '../../config'
 
-export default class Alien extends PureComponent {
+interface AlienProps {
+    id: number;
+    type: string; // Tipo de alien.
+    variant: number; // Variante de alien.
+    left: number; // Posición izquierda de la pantalla.
+    bottom: number; // Posición inferior de la pantalla.
+}
 
-    get type() {
-        const { type, variant } = this.props
-        return `alien${type}_${variant}`
+export default class Alien extends PureComponent<AlienProps> {
+    // Obtener la imagen del alien.
+    get type(): string {
+        const { type, variant } = this.props;
+        return `alien${type}_${variant}`;
     }
 
     render() {
-        const { left, bottom } = this.props
-
-        const dynamicStyles = [styles.base, { left, bottom }]
+        const { left, bottom } = this.props;
+        const dynamicStyles = [styles.base, { left, bottom }];
 
         return (
             <View style={dynamicStyles}>
                 <Sprite image={this.type} width={options.alienSize} />
             </View>
-        )
+        );
     }
 }
 
@@ -32,4 +39,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         //backgroundColor: 'blue'
     }
-})
+});

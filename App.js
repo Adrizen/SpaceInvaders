@@ -18,7 +18,7 @@ export default class App extends PureComponent {
     explosion: [],
     score: 0,
     highest: 0,
-	isPaused: false,
+	  isPaused: false,
   };
 
   componentDidMount() {
@@ -51,9 +51,7 @@ export default class App extends PureComponent {
     if (winner) this.reinitState();
 
     this.generateAliens();
-	// if (false) { // TODO: Borrar que es pa testing.
 		this.gameLoop = setInterval(() => this.renderFrame(), this.state.speed);
-	//}
   }
 
   reinitState() {
@@ -71,7 +69,7 @@ export default class App extends PureComponent {
   }
 
   exit() {
-    console.log("Exit");
+    console.log("Salir");
   }
 
   victory() {
@@ -122,7 +120,7 @@ export default class App extends PureComponent {
     const offsetForCentering = options.aliensHorDistance / 2;
     const xOffset =
       offsetForCentering +
-      (width - alienHorSpace * Math.max(...options.aliensInit)) / 2; // To target aliens
+      (width - alienHorSpace * Math.max(...options.aliensInit)) / 2; // Para apuntar a los aliens.
     const yOffset = alienVerSpace + alienVerSpace * 0.4;
 
     options.aliensInit.map((el, ind) => {
@@ -146,11 +144,11 @@ export default class App extends PureComponent {
   moveAliens(dX, dY) {
     const { aliens, direction, playerXPosition } = this.state;
 
-    /* TODO: With aliens in multiple rows, the boundary reversal is repeated for each row, causing a bug on the direction, which is reversed multiple times. 
-	The check is therefore carried out only once, if it needs to be reversed there is no point in checking again */
+    /* Con aliens en varias filas, los limites de inversión se repiten por cada una, lo que causa un bug en la dirección, que es revertido varias veces. 
+	    Por lo tanto el check es ejecutado solo una vez, si necesita ser revertido varias veces no hace falta revisarlo otra vez */
     let inversionTrue = false;
 
-    // TODO: Reset the down state, by default aliens should not come down
+    // Resetear el estado 'down', por defecto los aliens no deberían bajar.
     this.setState({ down: false });
 
     const clonedAliens = this.cloneState(aliens);
@@ -159,10 +157,9 @@ export default class App extends PureComponent {
       el.x += dX;
       el.y -= dY;
 
-      if (inversionTrue) return; // TODO: Should we reverse it? Stopping, checking other aliens is useless
+      if (inversionTrue) return;
 
-      /* TODO: Off screen? To reverse! I just check if the aliens are going in the same direction as the edge to avoid a bug in renderFrame when they only 
-	  move down */
+      // Reversa si los aliens están offscreen. Se revisa si los alien se dirigen a la misma dirección que el marco, para evitar un bug en renderFrame 
       if (
         (direction === 1 && el.x + (options.alienSize + 16) > width) ||
         (direction === -1 && el.x < 16)
@@ -207,7 +204,7 @@ export default class App extends PureComponent {
     const killedAlienInd = clonedAliens.findIndex((el) => el.id === id);
     const killedAlienType = clonedAliens[killedAlienInd].t;
 
-    // TODO: Find the next aliens in the same row (same type as the dead one and lower index because the array is reversed)
+    // Encontrar los siguientes aliens en la misma fila.
     const nextAliens = clonedAliens.filter(
       (el, ind) =>
         el.id !== id && el.t === killedAlienType && ind < killedAlienInd
@@ -280,7 +277,7 @@ export default class App extends PureComponent {
       playerXPosition,
       lives,
       winner,
-	  isPaused,
+	    isPaused,
     } = this.state;
 
 	togglePause = () => {
@@ -302,8 +299,8 @@ export default class App extends PureComponent {
 
     return (
       <GameView
-        width={width} // screen width
-        height={height} // screen height
+        width={width} 
+        height={height} 
         score={score}
         updateScore={this.updateScore}
         highest={highest}
@@ -320,8 +317,8 @@ export default class App extends PureComponent {
         updateLives={this.updateLives}
         winner={winner}
         exit={this.exit}
-		isPaused={isPaused}
-		onPausePress={this.togglePause}
+		    isPaused={isPaused}
+		    onPausePress={this.togglePause}
       />
     );
   }

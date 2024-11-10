@@ -4,8 +4,14 @@ import Scores from '../scores'
 import Heading from '../heading'
 import Lives from '../lives'
 
+interface UpperBarProps {
+    score: number;
+    highest: number;
+    lives: number;
+    onButtonPress: () => void;
+}
 
-export default class UpperBar extends PureComponent {
+export default class UpperBar extends PureComponent<UpperBarProps> {
 
     render() {
         const { score, highest, lives, onButtonPress } = this.props

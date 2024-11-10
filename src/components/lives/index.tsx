@@ -2,11 +2,15 @@ import React, { PureComponent } from 'react'
 import { View, StyleSheet } from 'react-native'
 import Sprite from '../sprite'
 
-export default class Lives extends PureComponent {
+interface LivesProps {
+    number: number; // El número de las vidas a mostrar.
+}
+
+export default class Lives extends PureComponent<LivesProps> {
     renderLives() {
         const { number } = this.props
         
-        // If a rocket arrives with 0 lives, it crashes everything
+        // Asegurarse que el número es positivo.
         const positiveNumber = Math.max(number, 0)
 
         return Array(positiveNumber).fill(0).map((el, ind) => (

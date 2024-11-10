@@ -2,7 +2,8 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import options from '../../config'
 
-const Star = props => {
+
+const Star = (props: { position: {x: number, y: number}; big: boolean; luminosity: string; }) => {
 
     const { position, big, luminosity } = props
 

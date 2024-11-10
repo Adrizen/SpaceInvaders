@@ -1,13 +1,19 @@
 import React, { PureComponent } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, StyleProp, TextStyle } from 'react-native'
 import Score from '../score'
 
-export default class Scores extends PureComponent {
+interface ScoresProps {
+    score: number;
+    highest: number;
+    style?: StyleProp<TextStyle>; // Estilos opcionales.
+}
+
+export default class Scores extends PureComponent<ScoresProps> {
     render() {
         const { score, highest, style } = this.props
 
         return (
-            <View style={[styles.base, { ...style }]}>
+            <View style={[styles.base, StyleSheet.flatten(style)]}>
                 <Score label='score' points={score} />
                 <Score label='hi-score' points={highest} />
             </View>

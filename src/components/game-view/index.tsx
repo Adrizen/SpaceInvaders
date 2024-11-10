@@ -4,7 +4,6 @@ import {
   StatusBar,
   StyleSheet,
   SafeAreaView,
-  Platform,
   TouchableOpacity,
   Text,
 } from "react-native";
@@ -20,16 +19,13 @@ import UpperBar from "../upper-bar";
 interface RocketData {
   id: string;
   player: number;
-  // add other properties in RocketData based on your usage
 }
 
-interface ExplosionData {
-  [index: number]: number; // assuming it's an array of numbers based on the usage in explosion.length and explosion[1]
-}
+type ExplosionData = number[];
 
 interface GameViewProps {
   rockets: RocketData[];
-  aliens: any; // Replace `any` with the actual type if available
+  aliens: any; 
   height: number;
   width: number;
   score: number;
@@ -52,58 +48,22 @@ interface GameViewProps {
 
 export default class GameView extends PureComponent<GameViewProps> {
   renderRockets() {
-    const {
-      rockets,
-      aliens,
-      height,
-      removeAlien,
-      removeRocket,
-      updateScore,
-      playerXPosition,
-      updateLives,
-    } = this.props;
+    const { rockets, aliens, height, removeAlien, removeRocket, updateScore, playerXPosition, updateLives } = this.props;
 
     return rockets.map((el) =>
       el.player === 1 ? (
-        <PlayerRocket
-          key={el.id}
-          aliens={aliens}
-          limit={height}
-          rocketData={el}
-          removeRocket={removeRocket}
-          updateScore={updateScore}
-          removeAlien={removeAlien}
-        />
+        <PlayerRocket key={el.id} aliens={aliens} limit={height} rocketData={el} 
+                      removeRocket={removeRocket} updateScore={updateScore} removeAlien={removeAlien} />
       ) : (
-        <AlienRocket
-          key={el.id}
-          playerXPosition={playerXPosition}
-          limit={height}
-          rocketData={el}
-          removeRocket={removeRocket}
-          updateLives={updateLives}
-        />
+        <AlienRocket key={el.id} playerXPosition={playerXPosition} limit={height} 
+                     rocketData={el} removeRocket={removeRocket} updateLives={updateLives} />
       )
     );
   }
 
   render() {
-    const {
-      score,
-      highest,
-      aliens,
-      fire,
-      width,
-      height,
-      explosion,
-      clearExplosion,
-      updatePlayerPosition,
-      lives,
-      winner,
-      exit,
-      isPaused,
-      onPausePress,
-    } = this.props;
+    const {score, highest, aliens, fire, width, height, explosion, 
+           clearExplosion, updatePlayerPosition, lives, winner, exit, isPaused, onPausePress } = this.props;
 
     return (
       <SafeAreaView style={styles.base}>
@@ -127,12 +87,13 @@ export default class GameView extends PureComponent<GameViewProps> {
             </View>
           )}
 
-          <AliensGrid config={aliens} width={width} height={height} />
+          <AliensGrid config={aliens} //width={width} height={height} 
+          />
 
           {explosion.length > 0 && (
             <Explosion
-              variant={explosion[1] === 0 ? "2" : "1"}
-              position={explosion}
+              variant={explosion[1] === 0 ? 2 : 1}
+              position={[width, height]}  // TODO: Revisar jejox. Antes era position={explosion} pero da error.
               onAnimationEnd={clearExplosion}
             />
           )}
@@ -162,7 +123,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    paddingTop: Platform.OS === "ios" ? 4 : 24,
+    paddingTop: 24,
     flex: 1,
     zIndex: 1,
   },
