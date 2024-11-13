@@ -5,6 +5,7 @@ const options = {
     rocketCoolDown: 800, // El intervalo de tiempo entre un misil y otro.
 
     aliensInit: [5, 5, 5], // 3 filas, cada una con 5 aliens;
+    //aliensInit: [1], // Para DEBUG.
     aliensHorDistance: 20,
     aliensVerDistance: 20,
     aliensHorStep: 20,
@@ -28,8 +29,9 @@ export const sprites = {
     alien2_1: require('../assets/512/alien2_1.png'),
     alien2_2: require('../assets/512/alien2_2.png'),
     alien3_1: require('../assets/512/alien3_1.png'),
-    alien3_2: require('../assets/512/alien3_2.png')
-    //TODO: Agregar pause y play button.
+    alien3_2: require('../assets/512/alien3_2.png'),
+    play: require('../assets/512/play.png'),
+    pause: require('../assets/512/pause.png')
 }
 
 export default options
