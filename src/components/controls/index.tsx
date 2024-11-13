@@ -11,6 +11,7 @@ interface ControlsProps {
     lives: number;
     fire: (position: { x: number; y: number }) => void;
     updatePlayerPosition: (position: number) => void;
+    isPaused: boolean;
 }
 
 export default class Controls extends PureComponent<ControlsProps> {
@@ -42,6 +43,7 @@ export default class Controls extends PureComponent<ControlsProps> {
         }).start();
     }
 
+    // Transparentar y opacar el cañon cuando recibe un misil enemigo.
     componentDidUpdate(prevProps: ControlsProps) {
         if (this.props.lives > 0 && prevProps.lives !== this.props.lives) {
             Animated.sequence([
@@ -61,10 +63,11 @@ export default class Controls extends PureComponent<ControlsProps> {
         }
     }
 
+    // Disparar cañon.
     fire = () => {
-        const { fire } = this.props;
+        const { fire, isPaused } = this.props;
 
-        if (!this.coolDown) {
+        if (!this.coolDown && !isPaused) {  // Evitar disparar si está en cooldown o pausado.
             fire({ x: this.cannonXPosition, y: options.cannonSize });
             this.coolDown = true;
             setTimeout(() => (this.coolDown = false), options.rocketCoolDown);
@@ -82,7 +85,7 @@ export default class Controls extends PureComponent<ControlsProps> {
         const { width, height } = this.props;
 
         const animatedStyle = { transform: [{ translateY: this.translateY }] };
-        const touchableArea = [styles.innerView, { width: width * 2 - options.cannonSize }];
+        const touchableArea = [styles.innerView, { width: width * 2 - options.cannonSize }];    // Área dónde funcionan los controles (disparar y mover).
 
         return (
             <Animated.View style={[styles.base, { height: height / 2, ...animatedStyle }]}>
@@ -95,7 +98,7 @@ export default class Controls extends PureComponent<ControlsProps> {
                     decelerationRate={0.01}
                     scrollEventThrottle={50}
                     onScroll={({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) =>
-                        this.calculateCannonPosition(nativeEvent.contentOffset.x)   // TODO: Esto es raro y está distinto al .js original
+                        this.calculateCannonPosition(nativeEvent.contentOffset.x)   
                     }
                 >
                     <TouchableWithoutFeedback onPress={this.fire}>
@@ -118,7 +121,8 @@ const styles = StyleSheet.create({
         left: 0,
         zIndex: 2
     },
-    innerView: {
+    // "Caja" donde funciona el control.
+    innerView: {    
         //backgroundColor: 'orangered',
         flexDirection: 'row',
         alignItems: 'flex-end',

@@ -4,7 +4,6 @@ import {
   StatusBar,
   StyleSheet,
   SafeAreaView,
-  TouchableOpacity,
   Text,
 } from "react-native";
 import Controls from "../controls";
@@ -31,8 +30,8 @@ interface GameViewProps {
   playerXPosition: number;
   winner: number;
   lives: number;
-  fire: () => void;
-  exit: () => void;
+  fire: (launchPos: any, player?: number) => void;
+  onExitPress: () => void;
   isPaused: boolean;
   onPausePress: () => void;
   updatePlayerPosition: (position: number) => void;
@@ -58,7 +57,7 @@ export default class GameView extends PureComponent<GameViewProps> {
   }
 
   render() {
-    const {score, highest, aliens, fire, width, height,updatePlayerPosition, lives, winner, exit, isPaused, onPausePress } = this.props;
+    const {score, highest, aliens, fire, width, height, updatePlayerPosition, lives, winner, onExitPress, isPaused, onPausePress } = this.props;
       
     return (
       <SafeAreaView style={styles.base}>
@@ -69,12 +68,10 @@ export default class GameView extends PureComponent<GameViewProps> {
             score={score}
             highest={highest}
             lives={lives}
-            onButtonPress={exit}
+            isPaused={isPaused}
+            onExitPress={onExitPress}
+            onPausePress={onPausePress}
           />
-
-          <TouchableOpacity onPress={onPausePress}>
-            {isPaused ? <Text>Play</Text> : <Text>Pause</Text>}
-          </TouchableOpacity>
 
           {isPaused && (
             <View>
@@ -94,6 +91,7 @@ export default class GameView extends PureComponent<GameViewProps> {
               height={height}
               updatePlayerPosition={updatePlayerPosition}
               lives={lives}
+              isPaused={isPaused}
             />
           )}
         </View>
