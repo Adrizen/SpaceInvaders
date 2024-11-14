@@ -13,7 +13,7 @@ export default class App extends PureComponent {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Game" component={GameScreen} />
+          <Stack.Screen name="Game" component={GameScreen} options={{headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
     );
