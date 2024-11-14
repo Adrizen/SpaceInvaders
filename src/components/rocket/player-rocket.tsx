@@ -25,7 +25,10 @@ interface PlayerRocketState {
   xPosition: number;
 }
 
-export default class PlayerRocket extends PureComponent<PlayerRocketProps, PlayerRocketState> {
+export default class PlayerRocket extends PureComponent<
+  PlayerRocketProps,
+  PlayerRocketState
+> {
   /*
    * El jugador dispara hacia arriba, la posición del cohete está determinada empezando por el valor de translateY
    * Posición inicial: valor desde el fondo (compensado con la altura del cañon)
@@ -118,7 +121,11 @@ export default class PlayerRocket extends PureComponent<PlayerRocketProps, Playe
   render() {
     const { translateY, xPosition } = this.state;
     const { rocketData } = this.props;
-    const animatedStyle = { transform: [{ translateY }], bottom: rocketData.y - 10, left: xPosition };
+    const animatedStyle = {
+      transform: [{ translateY }],
+      bottom: rocketData.y - 10,
+      left: xPosition,
+    };
 
     return <Animated.View style={[styles.base, animatedStyle]} />;
   }

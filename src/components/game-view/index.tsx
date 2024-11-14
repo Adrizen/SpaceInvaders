@@ -1,17 +1,10 @@
 import React, { PureComponent } from "react";
-import {
-  View,
-  StatusBar,
-  StyleSheet,
-  SafeAreaView,
-  Text,
-} from "react-native";
+import { View, StatusBar, StyleSheet, SafeAreaView, Text } from "react-native";
 import Controls from "../controls";
 import AliensGrid from "../aliens-grid";
 import PlayerRocket from "../rocket/player-rocket";
 import AlienRocket from "../rocket/alien-rocket";
 import UpperBar from "../upper-bar";
-
 
 interface RocketData {
   id: number;
@@ -22,7 +15,7 @@ interface RocketData {
 
 interface GameViewProps {
   rockets: RocketData[];
-  aliens: any; 
+  aliens: any;
   height: number;
   width: number;
   score: number;
@@ -43,22 +36,57 @@ interface GameViewProps {
 
 export default class GameView extends PureComponent<GameViewProps> {
   renderRockets() {
-    const { rockets, aliens, height, removeAlien, removeRocket, updateScore, playerXPosition, updateLives } = this.props;
-    
+    const {
+      rockets,
+      aliens,
+      height,
+      removeAlien,
+      removeRocket,
+      updateScore,
+      playerXPosition,
+      updateLives,
+    } = this.props;
+
     return rockets.map((el) =>
       el.player === 1 ? (
-        <PlayerRocket key={el.id} aliens={aliens} limit={height} rocketData={el} 
-                      removeRocket={removeRocket} updateScore={updateScore} removeAlien={removeAlien} />
+        <PlayerRocket
+          key={el.id}
+          aliens={aliens}
+          limit={height}
+          rocketData={el}
+          removeRocket={removeRocket}
+          updateScore={updateScore}
+          removeAlien={removeAlien}
+        />
       ) : (
-        <AlienRocket key={el.id} playerXPosition={playerXPosition} limit={height} 
-                     rocketData={el} removeRocket={removeRocket} updateLives={updateLives} />
+        <AlienRocket
+          key={el.id}
+          playerXPosition={playerXPosition}
+          limit={height}
+          rocketData={el}
+          removeRocket={removeRocket}
+          updateLives={updateLives}
+        />
       )
     );
   }
 
   render() {
-    const {score, highest, aliens, fire, width, height, updatePlayerPosition, lives, winner, onExitPress, isPaused, onPausePress } = this.props;
-      
+    const {
+      score,
+      highest,
+      aliens,
+      fire,
+      width,
+      height,
+      updatePlayerPosition,
+      lives,
+      winner,
+      onExitPress,
+      isPaused,
+      onPausePress,
+    } = this.props;
+
     return (
       <SafeAreaView style={styles.base}>
         <StatusBar barStyle="light-content" />
@@ -79,7 +107,8 @@ export default class GameView extends PureComponent<GameViewProps> {
             </View>
           )}
 
-          <AliensGrid config={aliens} //width={width} height={height} // TODO: Revisar. Antes era con el width y height sin comentar.
+          <AliensGrid
+            config={aliens} //width={width} height={height} // TODO: Revisar. Antes era con el width y height sin comentar.
           />
 
           {this.renderRockets()}
@@ -95,7 +124,6 @@ export default class GameView extends PureComponent<GameViewProps> {
             />
           )}
         </View>
-
       </SafeAreaView>
     );
   }

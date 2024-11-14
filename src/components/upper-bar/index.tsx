@@ -16,7 +16,8 @@ interface UpperBarProps {
 
 export default class UpperBar extends PureComponent<UpperBarProps> {
   render() {
-    const { score, highest, lives, onExitPress, onPausePress, isPaused } = this.props;
+    const { score, highest, lives, onExitPress, onPausePress, isPaused } =
+      this.props;
 
     return (
       <View style={{ paddingHorizontal: 20 }}>
@@ -26,7 +27,11 @@ export default class UpperBar extends PureComponent<UpperBarProps> {
           </TouchableOpacity>
 
           <TouchableOpacity onPress={onPausePress}>
-            {isPaused ? <Sprite image="play" width={30} /> : <Sprite image="pause" width={30} />}
+            {isPaused ? (
+              <Sprite image="play" width={30} />
+            ) : (
+              <Sprite image="pause" width={30} />
+            )}
           </TouchableOpacity>
 
           <Lives number={lives} />
