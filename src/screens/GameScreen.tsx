@@ -1,12 +1,13 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent } from 'react';
 import GameView from "../components/game-view";
-import config from "../config";
+import config from '../config'
 import { Dimensions, Alert, Vibration } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get("window");
 
 interface GameStateProps {
+  navigation: () => void;
   winner: number;
   speed: number;
   playerXPosition: number;
@@ -21,7 +22,9 @@ interface GameStateProps {
 }
 
 export default class GameScreen extends PureComponent<{}, GameStateProps> {
+  
   state: GameStateProps = {
+    navigation: useNavigation(),
     winner: 0, // 0: nadie, 1: jugador, 2: computadora
     speed: config.startingGameSpeed,
     playerXPosition: 0,
@@ -36,6 +39,7 @@ export default class GameScreen extends PureComponent<{}, GameStateProps> {
   };
   delay: string | number | NodeJS.Timeout;
   gameLoop: NodeJS.Timeout;
+  
 
   componentDidMount() {
     this.initGame();
@@ -47,7 +51,7 @@ export default class GameScreen extends PureComponent<{}, GameStateProps> {
     // Un alien menos, incrementar la velocidad.
     // No debe ser llamado en init (cuando antes hubo un ganador) o la velocidad no se va a reiniciar.
     if (
-      !prevState.isPaused && // No está pausado.
+      !prevState.isPaused &&  // No está pausado.
       !prevState.winner && // No hay un ganador.
       prevState.aliens.length > 1 && // Hay al menos un alien.
       prevState.aliens.length !== aliens.length // La cantidad de aliens cambio con respecto al estado anterior.
@@ -82,12 +86,11 @@ export default class GameScreen extends PureComponent<{}, GameStateProps> {
       score: this.state.score,
     };
     //this.setState(this.state.winner === 1 ? { ...common } : { ...common, lives: config.numberOfLives, aliens: [], score: 0 });
-    this.setState(
-      // De nuevo, para que TS no se queje.
+    this.setState(  // De nuevo, para que TS no se queje.
       this.state.winner === 1
-        ? { ...common }
-        : { ...common, lives: config.numberOfLives, aliens: [], score: 0 }
-    );
+      ? { ...common }
+      : { ...common, lives: config.numberOfLives, aliens: [], score: 0 }
+    )
   }
 
   victory() {
@@ -118,10 +121,7 @@ export default class GameScreen extends PureComponent<{}, GameStateProps> {
     clearInterval(this.gameLoop); // Limpiar el intervalo actual.
 
     // La velocidad se incrementa un x% comparado a su último valor.
-    const newSpeed = +(
-      startingSpeed -
-      startingSpeed * config.speedMultiplier
-    ).toFixed(0);
+    const newSpeed = +(startingSpeed - startingSpeed * config.speedMultiplier).toFixed(0);
 
     this.setState({ speed: newSpeed }, () => {
       this.gameLoop = setInterval(() => this.renderFrame(), newSpeed);
@@ -138,9 +138,7 @@ export default class GameScreen extends PureComponent<{}, GameStateProps> {
     const alienVerSpace = config.alienSize + config.aliensVerDistance;
 
     const offsetForCentering = config.aliensHorDistance / 2;
-    const xOffset =
-      offsetForCentering +
-      (width - alienHorSpace * Math.max(...config.aliensInit)) / 2; // Para apuntar a los aliens.
+    const xOffset = offsetForCentering + (width - alienHorSpace * Math.max(...config.aliensInit)) / 2; // Para apuntar a los aliens.
     const yOffset = alienVerSpace + alienVerSpace * 0.4;
 
     config.aliensInit.map((el, ind) => {
@@ -180,13 +178,10 @@ export default class GameScreen extends PureComponent<{}, GameStateProps> {
       if (inversionTrue) return;
 
       // Reversa si los aliens están offscreen. Se revisa si los alien se dirigen a la misma dirección que el marco, para evitar un bug en renderFrame
-      if (
-        (direction === 1 && el.x + (config.alienSize + 16) > width) ||
-        (direction === -1 && el.x < 16)
-      ) {
+      if ((direction === 1 && el.x + (config.alienSize + 16) > width) || (direction === -1 && el.x < 16)) {
         this.setState((prevState) => ({
           //direction: (prevState.direction *= -1),
-          direction: prevState.direction * -1,
+          direction: (prevState.direction * -1),
           down: true,
         }));
         inversionTrue = true;
@@ -212,7 +207,7 @@ export default class GameScreen extends PureComponent<{}, GameStateProps> {
       const doesShoot = Math.random() < config.shootingProbability;
       if (doesShoot) {
         const randomAlien = aliens[Math.floor(Math.random() * aliens.length)];
-        this.fire({ x: randomAlien.x, y: randomAlien.y }, 2);
+        this.fire({ x: randomAlien.x, y: randomAlien.y }, 2); 
       }
 
       // Devuelve un nuevo array de aliens, como FRAME FINAL.
@@ -229,10 +224,7 @@ export default class GameScreen extends PureComponent<{}, GameStateProps> {
     const killedAlienType = clonedAliens[killedAlienInd].t;
 
     // Encontrar los siguientes aliens en la misma fila.
-    const nextAliens = clonedAliens.filter(
-      (el, ind) =>
-        el.id !== id && el.t === killedAlienType && ind < killedAlienInd
-    );
+    const nextAliens = clonedAliens.filter((el, ind) => el.id !== id && el.t === killedAlienType && ind < killedAlienInd);
 
     // Mueve la siguiente fila de aliens por una diferencia igual al espacio ocupado por un alien.
     nextAliens.forEach((el) => el.x + config.aliensHorSpace);
@@ -244,11 +236,8 @@ export default class GameScreen extends PureComponent<{}, GameStateProps> {
     clonedAliens.splice(killedAlienInd, 1);
 
     //this.setState(clonedAliens.length === 0 ? { ...commonState, winner: 1 } : commonState);
-    this.setState(
-      clonedAliens.length === 0
-        ? { ...commonState, winner: 1, aliens: clonedAliens }
-        : { ...commonState, winner: this.state.winner, aliens: clonedAliens }
-    ); // Para que TS no se queje.
+    this.setState(clonedAliens.length === 0 ? { ...commonState, winner: 1, aliens: clonedAliens} 
+                                            : {...commonState, winner: this.state.winner, aliens: clonedAliens} ) // Para que TS no se queje.
   };
 
   fire = (launchPos, player = 1) => {
@@ -275,22 +264,21 @@ export default class GameScreen extends PureComponent<{}, GameStateProps> {
     this.setState({ rockets });
   };
 
-  updateScore = () =>
-    this.setState((prevState) => ({ score: prevState.score + 1 }));
+  updateScore = () => this.setState((prevState) => ({ score: prevState.score + 1 }));
 
   updatePlayerPosition = (value) => this.setState({ playerXPosition: value });
 
   updateLives = () => {
     this.setState((prevState) => {
       const lives = prevState.lives - 1;
-      return { lives, winner: lives === 0 ? 2 : prevState.winner }; // Para que no se queje TS.
+      return { lives, winner: lives === 0 ? 2 : prevState.winner }  // Para que no se queje TS.
       //return lives === 0 ? { lives, winner: 2 } : { lives };
     });
   };
 
   onExitPress() {
     Vibration.vibrate(100);
-    this.props.navigation.goBack();
+    useNavigation.goBack();
     console.log("Salir");
   }
 
@@ -312,16 +300,7 @@ export default class GameScreen extends PureComponent<{}, GameStateProps> {
   };
 
   render() {
-    const {
-      score,
-      highest,
-      rockets,
-      aliens,
-      playerXPosition,
-      lives,
-      winner,
-      isPaused,
-    } = this.state;
+    const { score, highest, rockets, aliens, playerXPosition, lives, winner, isPaused } = this.state;
 
     return (
       <GameView
