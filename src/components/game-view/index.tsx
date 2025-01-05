@@ -1,22 +1,39 @@
-import React, { PureComponent } from "react";
-import {
-  View,
-  StatusBar,
-  StyleSheet,
-  SafeAreaView,
-  Platform,
-  TouchableOpacity,
-  Text,
-} from "react-native";
+import { PureComponent } from "react";
+import { View, StatusBar, StyleSheet, SafeAreaView, Text } from "react-native";
 import Controls from "../controls";
 import AliensGrid from "../aliens-grid";
 import PlayerRocket from "../rocket/player-rocket";
 import AlienRocket from "../rocket/alien-rocket";
-import Sky from "../sky";
-import Explosion from "../explosion";
 import UpperBar from "../upper-bar";
 
-export default class GameView extends PureComponent {
+interface RocketData {
+  id: number;
+  player: number; // 1 = player, 2 = alien
+  x: number;
+  y: number;
+}
+
+interface GameViewProps {
+  rockets: RocketData[];
+  aliens: any;
+  height: number;
+  width: number;
+  score: number;
+  highest: number;
+  playerXPosition: number;
+  winner: number;
+  lives: number;
+  fire: (launchPos: any, player?: number) => void;
+  isPaused: boolean;
+  onPausePress: () => void;
+  updatePlayerPosition: (position: number) => void;
+  updateScore: () => void;
+  updateLives: () => void;
+  removeAlien: (alienId: number) => void;
+  removeRocket: (rocketId: number) => void;
+}
+
+export default class GameView extends PureComponent<GameViewProps> {
   renderRockets() {
     const {
       rockets,
@@ -61,12 +78,9 @@ export default class GameView extends PureComponent {
       fire,
       width,
       height,
-      explosion,
-      clearExplosion,
       updatePlayerPosition,
       lives,
       winner,
-      exit,
       isPaused,
       onPausePress,
     } = this.props;
@@ -74,33 +88,18 @@ export default class GameView extends PureComponent {
     return (
       <SafeAreaView style={styles.base}>
         <StatusBar barStyle="light-content" />
-
         <View style={styles.container}>
           <UpperBar
             score={score}
             highest={highest}
             lives={lives}
-            onButtonPress={exit}
+            isPaused={isPaused}
+            onPausePress={onPausePress}
           />
-          
-          <TouchableOpacity
-            //style={style.pauseButton}
-            onPress={onPausePress}
-          >
-            {isPaused ? <Text>Play</Text> : <Text>Pause</Text>}
-          </TouchableOpacity>
 
-          {isPaused && ( <View> <Text style={{fontSize: 32}} >PAUSADO PADREEEEE</Text> </View> ) }
-
-          <AliensGrid config={aliens} width={width} height={height} />
-
-          {explosion.length > 0 && (
-            <Explosion
-              variant={explosion[1] === 0 ? "2" : "1"} // Solo il cannone ha y = 0
-              position={explosion}
-              onAnimationEnd={clearExplosion}
-            />
-          )}
+          <AliensGrid
+            config={aliens}
+          />
 
           {this.renderRockets()}
 
@@ -111,11 +110,10 @@ export default class GameView extends PureComponent {
               height={height}
               updatePlayerPosition={updatePlayerPosition}
               lives={lives}
+              isPaused={isPaused}
             />
           )}
         </View>
-
-        <Sky width={width} height={height} />
       </SafeAreaView>
     );
   }
@@ -127,12 +125,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    //backgroundColor: 'orangered',
-    paddingTop: Platform.OS === "ios" ? 4 : 24,
+    paddingTop: 24,
     flex: 1,
     zIndex: 1,
   },
   pauseButton: {
-    position: 'absolute',
-  }
+    position: "absolute",
+  },
 });
