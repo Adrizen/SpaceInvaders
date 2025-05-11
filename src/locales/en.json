@@ -1,0 +1,22 @@
+{
+  "translation": {
+    "loading": "Loading...",
+    "login": "Login",
+    "welcome": "Welcome",
+    "seeRanking": "See ranking",
+    "register": "Register",
+    "username": "Username",
+    "password": "Password",
+    "creating": "Creating...",
+    "loggedIn": "Sucessfully logged in",
+    "wrongCredentials": "Wrong credentials",
+    "startGame": "Start game",
+    "completeFields": "Please complete all fields",
+    "accountCreated": "Account created successfully",
+    "accountCreatedError": "Error creating account",
+    "usernameAlreadyExists": "Username already exists",
+    "aliensWon": "Aliens won!",
+    "recordFirst": "You have achieved a new record of ",
+    "recordSecond": " points. The ranking has been updated."
+  }
+}

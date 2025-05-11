@@ -1,0 +1,22 @@
+{
+  "translation": {
+    "loading": "Cargando...",
+    "login": "Iniciar sesión",
+    "welcome": "Bienvenido",
+    "seeRanking": "Ver ranking",
+    "register": "Registrarse",
+    "username": "Nombre de usuario",
+    "password": "Contraseña",
+    "creating": "Creando...",
+    "loggedIn": "Logueado con éxito",
+    "wrongCredentials": "Credenciales incorrectas",
+    "startGame": "Comenzar juego",
+    "completeFields": "Por favor, complete todos los campos",
+    "accountCreated": "Cuenta creada con éxito",
+    "accountCreatedError": "Error creando cuenta",
+    "usernameAlreadyExists": "El nombre de usuario ya existe",
+    "aliensWon": "¡Los aliens han ganado!",
+    "recordFirst": "Has conseguido un nuevo record de ",
+    "recordSecond": " puntos. Se ha actualizado el ranking."
+  }
+}

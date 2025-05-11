@@ -9,14 +9,15 @@ import {
   BackHandler,
 } from "react-native";
 import { useEffect, useState } from "react";
-import { Link } from "expo-router";
+import { Link } from "expo-router"; // Permite navegar entre pantallas.
 import { initDB, getDB } from "../src/db/db";
 import loginUser from "../src/db/queries/login";
-import { SafeAreaView } from "react-native-safe-area-context";
-import * as Font from "expo-font";
-import { Audio } from "expo-av";
-import * as ScreenOrientation from "expo-screen-orientation";
-import Sprite from "../src/components/sprite";
+import { SafeAreaView } from "react-native-safe-area-context";  // Para evitar que los elementos se superpongan.
+import * as Font from "expo-font";  // Para cargar fuentes personalizadas.
+import { Audio } from "expo-av";  // Para reproducir música de fondo.
+import * as ScreenOrientation from "expo-screen-orientation"; // Para manejar la orientación de la pantalla.
+import Sprite from "../src/components/sprite";  
+import { useTranslation } from "react-i18next"; // Para traducir los textos.
 
 const MainScreen = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -25,6 +26,20 @@ const MainScreen = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [isMuted, setIsMuted] = useState(false);
+  
+  const { t, i18n } = useTranslation();
+  const [currentLanguage, setCurrentLanguage] = useState(i18n.languages[1]); // Inicializa por defecto en Español.
+
+  // Cambio de idioma.
+  const changeLanguage = () => {
+    if (currentLanguage === "es") {
+      setCurrentLanguage("en");
+      i18n.changeLanguage("en");
+    } else {
+      setCurrentLanguage("es");
+      i18n.changeLanguage("es");
+    }
+  };
 
   // Reproducción de música de fondo.
   const playMusic = async () => {
@@ -49,10 +64,12 @@ const MainScreen = () => {
     }
   };
 
+  // Ejecutar al inicio.
   useEffect(() => {
     initDB(); // Inicializa la base de datos.
     playMusic();
 
+    // Carga de fuentes personalizadas.
     const loadFonts = async () => {
       await Font.loadAsync({
         "space-invaders": require("../assets/fonts/Silver.ttf"),
@@ -71,7 +88,7 @@ const MainScreen = () => {
     // Limpieza de recursos.
     return () => {
       if (sound) {
-        sound.unloadAsync(); 
+        sound.unloadAsync();
       }
     };
   }, []);
@@ -83,9 +100,9 @@ const MainScreen = () => {
 
       if (user) {
         setIsLoggedIn(true);
-        Alert.alert("Logueado", "Logueado con éxito.");
+        Alert.alert( "Login" , t('loggedIn') );
       } else {
-        Alert.alert("Error", "Usuario o contraseña incorrectos.");
+        Alert.alert("Error", t('wrongCredentials'));
       }
     } catch (error) {
       console.error("Error en el logueo", error);
@@ -95,13 +112,10 @@ const MainScreen = () => {
     }
   };
 
-  // TODO: Tengo que hacer un botón para traducir de Español a Inglés y viceversa. La PUTA QUE LO PARIO.  AQUIENCARAJO SE LE OCURRE.
-  // TODO: Probar colocar tanto alien-rocket como player-rocket en un solo archivo.
-
   if (!fontsLoaded) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={{ textAlign: "center" }}>Cargando...</Text>
+        <Text style={{ textAlign: "center" }}>{t('loading')}</Text>
       </SafeAreaView>
     );
   }
@@ -112,28 +126,39 @@ const MainScreen = () => {
       style={styles.backgroundImage}
       resizeMode="cover"
     >
+
+    {/* Botón de salida. */}
       <TouchableOpacity style={styles.exitButton}>
         <Text
-          style={styles.exitButtonText}
+          style={styles.topButtonText}
           onPress={() => BackHandler.exitApp()}
         >
-          <Sprite image="exit"/>
+          <Sprite image="exit" />
         </Text>
       </TouchableOpacity>
 
+      {/* Botón de traducción */}
+      <TouchableOpacity style={styles.translateButton}>
+        <Text style={styles.topButtonText} onPress={() => changeLanguage()}>
+          <Sprite image="translate" />
+        </Text>
+      </TouchableOpacity>
+
+      {/* Botón de mutear/desmutear */}
       <TouchableOpacity style={styles.muteButton} onPress={toggleMute}>
-        <Text style={styles.muteButtonText}>
+        <Text style={styles.topButtonText}>
           {isMuted ? <Sprite image="mute" /> : <Sprite image="unmute" />}
         </Text>
       </TouchableOpacity>
+
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}>Space Invaders</Text>
         {isLoggedIn ? (
           <View>
-            <Text style={styles.title}>Bienvenido {name}</Text>
+            <Text style={styles.title}>{t('welcome')} {name}</Text>
             <View style={styles.linkContainer}>
               <Link style={styles.link} href="/Ranking/Ranking">
-                Ver ranking
+                {t('seeRanking')}
               </Link>
             </View>
 
@@ -142,10 +167,10 @@ const MainScreen = () => {
                 style={styles.link}
                 href={{
                   pathname: "/GameScreen/GameScreen",
-                  params: { name: name }, // Envia el parámetro de nombre.
+                  params: { name: name, t: t.toString() }, // Envía el parámetro de nombre.
                 }}
               >
-                Iniciar juego
+                {t('startGame')}
               </Link>
             </View>
           </View>
@@ -153,30 +178,31 @@ const MainScreen = () => {
           <View>
             <TextInput
               style={styles.input}
-              placeholder="Nombre de usuario"
+              placeholder={t('username')}
               placeholderTextColor={"white"}
               value={name}
               onChangeText={setName}
             />
             <TextInput
               style={styles.input}
-              placeholder="Contraseña"
+              placeholder={t('password')}
               placeholderTextColor={"white"}
               value={password}
               onChangeText={setPassword}
             />
-            <TouchableOpacity style={styles.button} onPress={login}>
-              <Text style={styles.buttonText}>Ingresar</Text>
+            <TouchableOpacity style={styles.loginButton} onPress={login}>
+              <Text style={styles.buttonText}>{t('login')}</Text>
             </TouchableOpacity>
             <View style={styles.linkContainer}>
               <Link style={styles.link} href="/Register/Register">
-                Registrarse
+                {t('register')}
               </Link>
             </View>
           </View>
         )}
       </SafeAreaView>
     </ImageBackground>
+
   );
 };
 
@@ -223,7 +249,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 10,
   },
-  button: {
+  loginButton: {
     backgroundColor: "green",
     padding: 8,
     alignItems: "center",
@@ -243,9 +269,6 @@ const styles = StyleSheet.create({
     borderRadius: 1,
     zIndex: 1,
   },
-  muteButtonText: {
-    fontSize: 35,
-  },
   exitButton: {
     position: "absolute",
     top: 50,
@@ -254,7 +277,15 @@ const styles = StyleSheet.create({
     borderRadius: 1,
     zIndex: 1,
   },
-  exitButtonText: {
-    fontSize: 35,
+  topButtonText: {
+    fontSize: 70,
   },
+  translateButton: {
+    position: "absolute",
+    top: 50,
+    left: 190,
+    padding: 10,
+    borderRadius: 1,
+    zIndex: 1,
+  }
 });

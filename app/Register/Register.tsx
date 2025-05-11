@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import registerUser from "../../src/db/queries/register";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Font from 'expo-font';
+import { useTranslation } from "react-i18next";
+
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -17,6 +19,9 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
+  const { t } = useTranslation(); // Traducción de textos.
+
+  // Cargar la fuente personalizada.
   useEffect(() => {
     const loadFonts = async () => {
       await Font.loadAsync({
@@ -25,12 +30,12 @@ const Register = () => {
       setFontsLoaded(true);
     }
     loadFonts();
-
   }, []);
 
+  // Registrar un usuario.
   const handleRegister = () => {
     if (!name || !password) {
-      Alert.alert("Error", "Por favor completar los campos de registro");
+      Alert.alert("Error", t('completeFields'));
       return;
     }
 
@@ -39,12 +44,12 @@ const Register = () => {
       const success = registerUser(name, password);
 
       if (success){
-        Alert.alert("Cuenta creada", "Cuenta creada con éxito.");
+        Alert.alert("Éxito", t('accountCreated'));
         setName("");
         setPassword("");
       }
     } catch (error) {
-      Alert.alert("Error", "Hubo un error al intentar crear la cuenta.");
+      Alert.alert("Error", t('accountCreatedError'));
       console.error("Error en el registro", error);
     } finally {
       setLoading(false);
@@ -66,17 +71,18 @@ const Register = () => {
       style={styles.backgroundImage}
     >
       <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Registrarse</Text>
+        <Text style={styles.title}>{t('register')}</Text>
+
         <TextInput
           style={styles.input}
-          placeholder="Nombre de usuario"
+          placeholder={t('username')}
           placeholderTextColor={"white"}
           value={name}
           onChangeText={setName}
         />
         <TextInput
           style={styles.input}
-          placeholder="Contraseña"
+          placeholder={t('password')}
           placeholderTextColor={"white"}
           value={password}
           onChangeText={setPassword}
@@ -86,9 +92,9 @@ const Register = () => {
           onPress={handleRegister}
           disabled={loading}
         >
-          <Text style={styles.buttonText}>
-            {loading ? "Creando..." : "Registrarse"}
-          </Text>
+            <Text style={styles.buttonText}>
+            {loading ? t('creating') : t('register')}
+            </Text>
         </TouchableOpacity>
       </SafeAreaView>
     </ImageBackground>

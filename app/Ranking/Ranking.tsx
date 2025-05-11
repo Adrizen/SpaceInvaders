@@ -30,6 +30,7 @@ const Ranking = () => {
 
     fetchData();
 
+    // Cargar la fuente personalizada.
     const loadFonts = async () => {
       await Font.loadAsync({
         'space-invaders': require('../../assets/fonts/Silver.ttf'),

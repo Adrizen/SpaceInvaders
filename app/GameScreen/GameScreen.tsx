@@ -6,6 +6,7 @@ import * as ScreenOrientation from "expo-screen-orientation";
 import { saveScore } from "../../src/db/queries/save_score";
 import { useLocalSearchParams } from "expo-router";
 import getUserScore from "../../src/db/queries/user_score";
+import { useTranslation } from "react-i18next";
 
 const { width, height } = Dimensions.get("window");
 
@@ -26,6 +27,7 @@ interface GameStateProps {
 
 interface GameScreenProps {
   playerName?: string;
+  t?: any;
 }
 
 class GameScreen extends PureComponent<GameScreenProps, GameStateProps> {
@@ -40,7 +42,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameStateProps> {
     rockets: [],  // Arreglo que almacena los cohetes.
     score: 0,   // Score actual.
     highest: 0, // HIGH-SCORE
-    isPaused: true,
+    isPaused: true
   };
   delay: string | number | NodeJS.Timeout;
   gameLoop: NodeJS.Timeout;
@@ -123,7 +125,8 @@ class GameScreen extends PureComponent<GameScreenProps, GameStateProps> {
 
   gameOver() {
     const { score, highest } = this.state;
-    const { playerName } = this.props;
+    const { playerName, t } = this.props;
+
 
     clearInterval(this.gameLoop);
     this.setState({
@@ -137,11 +140,11 @@ class GameScreen extends PureComponent<GameScreenProps, GameStateProps> {
     Alert.alert(
       "GAME OVER",
       highest < score
-        ? "¡Los alien han ganado!" +
+        ? t('aliensWon') +
             "\n" +
-            "Has conseguido un nuevo record de " + score + " puntos. Se ha actualizado el ranking."
-        : "¡Los alien han ganado!" + "\n",
-      [{ text: "Nuevo juego", onPress: () => this.initGame() }],
+            t('recordFirst') + score + t('recordSecond')
+        : t('aliensWon') + "\n",
+      [{ text: t('startGame'), onPress: () => this.initGame() }],
       { cancelable: false }
     );
   }
@@ -195,6 +198,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameStateProps> {
     this.setState({ aliens });
   }
 
+  // Mover los aliens en el grid.
   moveAliens(dX: number, dY: number) {
     const { aliens, direction } = this.state;
     const clonedAliens = this.cloneState(aliens);
@@ -282,6 +286,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameStateProps> {
     ); // Para que TS no se queje.
   };
 
+  // Disparar un misil.
   fire = (launchPos, player = 1) => {
     // Diferenciar los misiles por jugador, hay que saber quién disparó.
     const { rockets: stateRockets } = this.state;
@@ -295,6 +300,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameStateProps> {
     this.setState({ rockets });
   };
 
+  // Quitar misil del array de misiles.
   removeRocket = (id) => {
     const { rockets: stateRockets } = this.state;
 
@@ -311,6 +317,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameStateProps> {
 
   updatePlayerPosition = (value) => this.setState({ playerXPosition: value });
 
+  // Quitar una vida al jugador.S
   updateLives = () => {
     this.setState((prevState) => {
       const lives = prevState.lives - 1;
@@ -318,6 +325,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameStateProps> {
     });
   };
 
+  // Pausar o reanudar el juego.
   togglePause = () => {
     Vibration.vibrate(100);
     const { isPaused } = this.state;
@@ -371,11 +379,13 @@ class GameScreen extends PureComponent<GameScreenProps, GameStateProps> {
   }
 }
 
-// Componente funcional wrapper.
+// Componente funcional wrapper. Para la traducción y el nombre del jugador.
 export default function GameScreenWrapper() {
+
   const params = useLocalSearchParams();
 
   const playerName = Array.isArray(params.name) ? params.name[0] : params.name;
+  const { t } = useTranslation();
 
-  return <GameScreen playerName={playerName as string} />;
+  return <GameScreen playerName={playerName as string} t={t as any} />;
 }

@@ -33,7 +33,8 @@ export const sprites = {
     mute: require('../assets/512/volume-mute.png'),
     unmute: require('../assets/512/volume.png'),
     play: require('../assets/512/play.png'),
-    pause: require('../assets/512/pause.png')
+    pause: require('../assets/512/pause.png'),
+    translate: require('../assets/512/traduccion.png'),
 }
 
 export default options
