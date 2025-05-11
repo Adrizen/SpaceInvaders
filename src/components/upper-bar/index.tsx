@@ -18,7 +18,7 @@ export default class UpperBar extends PureComponent<UpperBarProps> {
     return (
       <View style={{ paddingHorizontal: 10, paddingTop: 20 }}>
         <View style={styles.base}>
-        <View style={styles.leftContainer}>
+          <View style={styles.leftContainer}>
             <Text style={styles.livesText}>LIVES: {lives}</Text>
           </View>
           <View style={styles.centerContainer}>
@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
   },
   livesText: {
     fontSize: 20,
-    color: "white"
-  }
+    color: "white",
+  },
 });

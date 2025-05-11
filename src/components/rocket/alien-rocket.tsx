@@ -8,7 +8,7 @@ interface AlienRocketProps {
     x: number;
     y: number;
   };
-  limit: number;
+  limit: number;  // Límite de la pantalla.
   playerXPosition: number;
   removeRocket: (id: number) => void;
   updateLives: () => void;

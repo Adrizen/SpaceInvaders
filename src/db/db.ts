@@ -20,8 +20,6 @@ const initDB = async () => {
       PRAGMA journal_mode = WAL;
   
       INSERT INTO User (name, password) VALUES ('Andy', 'andy123');
-      INSERT INTO User (name, password) VALUES ('Lucas', 'lucas123');
-      INSERT INTO User (name, password) VALUES ('Agus', 'agus123');
       INSERT INTO User (name, password) VALUES ('Fabio', 'fabio123');
       
       DROP TABLE Score;   -- <-- ESTO SE PUEDE COMENTAR PARA EVITAR QUE LAS TABLAS SE BORREN
@@ -34,8 +32,6 @@ const initDB = async () => {
   
       INSERT INTO Score (userID, score) VALUES (1, 0);
       INSERT INTO Score (userID, score) VALUES (2, 0);
-      INSERT INTO Score (userID, score) VALUES (3, 0);
-      INSERT INTO Score (userID, score) VALUES (4, 0);
     `);
   } catch (error) {
     console.log("Error al inicializar la base de datos", error);

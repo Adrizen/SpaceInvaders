@@ -12,7 +12,7 @@ import {
 import Sprite from "../sprite";
 import options from "../../config";
 
-const cannonHalf = options.cannonSize / 2;
+const cannonHalf = options.cannonSize / 2;  // Mitad del tamaño del cañon.
 
 interface ControlsProps {
   width: number;

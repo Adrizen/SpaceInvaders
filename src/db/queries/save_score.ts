@@ -1,4 +1,3 @@
-import { Alert } from "react-native";
 import { getDB } from "../db";
 
 interface CurrentScore {
@@ -18,8 +17,6 @@ export const saveScore = (name: string, newScore: number) => {
 
     // Si el puntaje nuevo es mejor, actualizarlo.
     if (newScore > currentScore.score) {
-      Alert.alert("Felicitaciones", "Has superado tu puntaje anterior.");
-
       db.execSync(
         "UPDATE Score SET score = " +
           newScore +

@@ -101,10 +101,6 @@ export default class GameView extends PureComponent<GameViewProps> {
             config={aliens}
           />
 
-          <AliensGrid
-            config={aliens} //width={width} height={height} // TODO: Revisar. Antes era con el width y height sin comentar.
-          />
-
           {this.renderRockets()}
 
           {winner !== 2 && (

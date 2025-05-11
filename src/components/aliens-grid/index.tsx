@@ -21,7 +21,6 @@ export default class AliensGrid extends PureComponent<AliensGridProps, AliensGri
     variant: 2,
   };
 
-  // 
   componentDidUpdate(prevProps: AliensGridProps, prevState: AliensGridState) {
     if (prevProps.config.length === this.props.config.length) {
       this.setState({ variant: prevState.variant === 2 ? 1 : 2 });
