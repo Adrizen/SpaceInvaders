@@ -1,6 +1,7 @@
 import { PureComponent } from "react";
-import { StyleSheet, Animated, Easing } from "react-native";
+import { Animated, Easing } from "react-native";
 import options from "../../config";
+import styles from "./styles";
 
 interface AlienRocketProps {
   rocketData: {
@@ -98,15 +99,7 @@ export default class AlienRocket extends PureComponent<AlienRocketProps, AlienRo
       left: xPosition,
     };
 
-    return <Animated.View style={[styles.base, animatedStyle]} />;
+    return <Animated.View style={[styles.baseAlien, animatedStyle]} />;
   }
 }
 
-const styles = StyleSheet.create({
-  base: {
-    width: 5,
-    height: 15,
-    backgroundColor: "red",
-    position: "absolute",
-  },
-});

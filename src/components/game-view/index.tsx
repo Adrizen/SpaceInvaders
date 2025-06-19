@@ -1,10 +1,11 @@
 import { PureComponent } from "react";
-import { View, StatusBar, StyleSheet, SafeAreaView, Text } from "react-native";
+import { View, StatusBar, SafeAreaView } from "react-native";
 import Controls from "../controls";
 import AliensGrid from "../aliens-grid";
 import PlayerRocket from "../rocket/player-rocket";
 import AlienRocket from "../rocket/alien-rocket";
 import UpperBar from "../upper-bar";
+import styles from "./styles";
 
 interface RocketData {
   id: number;
@@ -119,17 +120,3 @@ export default class GameView extends PureComponent<GameViewProps> {
   }
 }
 
-const styles = StyleSheet.create({
-  base: {
-    backgroundColor: "#000",
-    flex: 1,
-  },
-  container: {
-    paddingTop: 24,
-    flex: 1,
-    zIndex: 1,
-  },
-  pauseButton: {
-    position: "absolute",
-  },
-});

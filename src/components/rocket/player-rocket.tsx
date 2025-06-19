@@ -1,5 +1,6 @@
 import { PureComponent } from "react";
-import { StyleSheet, Animated, Easing } from "react-native";
+import { Animated, Easing } from "react-native";
+import styles from "./styles";
 import options from "../../config";
 
 interface PlayerRocketProps {
@@ -121,15 +122,6 @@ export default class PlayerRocket extends PureComponent<PlayerRocketProps, Playe
       left: xPosition,
     };
 
-    return <Animated.View style={[styles.base, animatedStyle]} />;
+    return <Animated.View style={[styles.basePlayer, animatedStyle]} />;
   }
 }
-
-const styles = StyleSheet.create({
-  base: {
-    width: 5,
-    height: 15,
-    backgroundColor: options.mainColor,
-    position: "absolute",
-  },
-});

@@ -1,5 +1,6 @@
 import { PureComponent } from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
+import styles from "./styles";
 import Sprite from "../sprite";
 import options from "../../config";
 
@@ -30,12 +31,3 @@ export default class Alien extends PureComponent<AlienProps> {
   }
 }
 
-const styles = StyleSheet.create({
-  base: {
-    position: "absolute",
-    width: options.alienSize,
-    height: options.alienSize,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

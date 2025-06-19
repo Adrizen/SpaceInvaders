@@ -1,6 +1,7 @@
 import { PureComponent } from "react";
 import { View, StyleSheet, StyleProp, TextStyle } from "react-native";
 import Score from "../score";
+import styles from "./styles";
 
 interface ScoresProps {
   score: number;
@@ -23,9 +24,4 @@ export default class Scores extends PureComponent<ScoresProps> {
   }
 }
 
-const styles = StyleSheet.create({
-  base: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-});
+

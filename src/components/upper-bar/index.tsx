@@ -1,7 +1,8 @@
 import { PureComponent } from "react";
-import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 import Scores from "../scores";
 import Sprite from "../sprite";
+import styles from "./styles";
 
 interface UpperBarProps {
   score: number;
@@ -41,27 +42,3 @@ export default class UpperBar extends PureComponent<UpperBarProps> {
   }
 }
 
-const styles = StyleSheet.create({
-  base: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingBottom: 3,
-    borderBottomColor: "#fdfdfd",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  leftContainer: {
-    flex: 1,
-  },
-  centerContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-  rightContainer: {
-    flex: 1,
-    alignItems: "flex-end",
-  },
-  livesText: {
-    fontSize: 20,
-    color: "white",
-  },
-});

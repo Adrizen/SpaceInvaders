@@ -3,7 +3,6 @@ import {
   View,
   ScrollView,
   TouchableWithoutFeedback,
-  StyleSheet,
   Animated,
   Easing,
   NativeSyntheticEvent,
@@ -11,6 +10,7 @@ import {
 } from "react-native";
 import Sprite from "../sprite";
 import options from "../../config";
+import styles from "./styles";
 
 const cannonHalf = options.cannonSize / 2;  // Mitad del tamaño del cañon.
 
@@ -146,19 +146,3 @@ export default class Controls extends PureComponent<ControlsProps> {
   }
 }
 
-const styles = StyleSheet.create({
-  base: {
-    position: "absolute",
-    bottom: -options.cannonSize,
-    left: 0,
-    zIndex: 2,
-  },
-  innerView: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "center",
-  },
-  flashView: {
-    backgroundColor: "rgba(0,0,0,0)",
-  },
-});
