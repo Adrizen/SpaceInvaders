@@ -1,6 +1,5 @@
 import { getDB } from "../db";
 import { Alert } from "react-native";
-import { useTranslation } from "react-i18next";
 
 interface NewUser {
   id: number;
@@ -8,7 +7,6 @@ interface NewUser {
 
 // Registra un nuevo usuario.
 const registerUser = (name: string, password: string) => {
-  const { t } = useTranslation(); // Traducción de textos.
 
   const db = getDB();
   let  success: Boolean;
@@ -42,7 +40,7 @@ const registerUser = (name: string, password: string) => {
       success = true;
 
     } else {
-      Alert.alert("Error", t('usernameAlreadyExists') );
+      Alert.alert("Error", "El usuario ya existe.");
       success = false;
     }
   } catch (error) {

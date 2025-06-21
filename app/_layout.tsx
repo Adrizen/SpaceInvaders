@@ -23,6 +23,18 @@ const RootLayout = () => {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="Ranking/Ranking"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Register/Register"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </I18nextProvider>
   );

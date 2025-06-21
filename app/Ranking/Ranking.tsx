@@ -1,5 +1,4 @@
 import {
-  StyleSheet,
   View,
   Text,
   FlatList,
@@ -9,6 +8,7 @@ import getRankingData from "../../src/db/queries/ranking";
 import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Font from 'expo-font';
+import styles from "./styles";
 
 const Ranking = () => {
   const [rankingData, setRankingData] = useState<{ id: number; name: string; score: number }[]>([]);
@@ -72,51 +72,5 @@ const Ranking = () => {
     </ImageBackground>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-  },
-  center: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  header: {
-    fontSize: 60,
-    fontFamily: "space-invaders",
-    color: "#fff",
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  item: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 10,
-    backgroundColor: "#7DABE0",
-    marginBottom: 10,
-    borderRadius: 8,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  rank: {
-    fontWeight: "bold",
-  },
-  name: {
-    flex: 1,
-    marginLeft: 10,
-  },
-  score: {
-    fontWeight: "bold",
-  },
-});
 
 export default Ranking;
